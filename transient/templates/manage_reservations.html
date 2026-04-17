@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Manage Reservations{% endblock %}
+{% block content %}
+<h2 class="mb-3"><i class="bi bi-journal-check"></i> Manage Reservations</h2>
+<div class="card shadow-sm"><div class="card-body table-responsive">
+<table class="table align-middle">
+<thead><tr><th>#</th><th>Guest</th><th>Room</th><th>Check-in</th><th>Check-out</th><th>Total</th><th>Status</th><th>Action</th></tr></thead>
+<tbody>
+{% for r in reservations %}
+<tr>
+  <td>{{ r.id }}</td>
+  <td>{{ r.full_name }}<br><small class="text-muted">{{ r.email }}</small></td>
+  <td>{{ r.room_name }}</td>
+  <td>{{ r.check_in }}</td>
+  <td>{{ r.check_out }}</td>
+  <td>₱{{ "%.2f"|format(r.total_amount) }}</td>
+  <td><span class="badge bg-info">{{ r.status }}</span></td>
+  <td>
+    <form method="post" action="{{ url_for('update_reservation_status', res_id=r.id) }}" class="d-flex gap-1">
+      <select name="status" class="form-select form-select-sm">
+        {% for s in ['pending','confirmed','cancelled','checked_in','checked_out'] %}
+          <option value="{{ s }}" {% if r.status==s %}selected{% endif %}>{{ s }}</option>
+        {% endfor %}
+      </select>
+      <button class="btn btn-sm btn-brand">Update</button>
+    </form>
+  </td>
+</tr>
+{% else %}<tr><td colspan="8" class="text-muted">No reservations yet.</td></tr>{% endfor %}
+</tbody></table>
+</div></div>
+{% endblock %}

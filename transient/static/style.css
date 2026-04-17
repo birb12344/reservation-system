@@ -1,0 +1,20 @@
+:root {
+  --brand: #2c5f7c;
+  --brand-dark: #1d4258;
+  --accent: #f4a261;
+  --bg: #f7f9fb;
+}
+body { background: var(--bg); font-family: 'Segoe UI', system-ui, sans-serif; }
+.navbar-brand { font-weight: 700; letter-spacing: .5px; }
+.btn-brand { background: var(--brand); color: #fff; border: 0; }
+.btn-brand:hover { background: var(--brand-dark); color: #fff; }
+.hero {
+  background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+  color: #fff; padding: 80px 20px; border-radius: 0 0 20px 20px;
+}
+.room-card { transition: transform .15s ease, box-shadow .15s ease; }
+.room-card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0,0,0,.08); }
+.stat-card { border-left: 5px solid var(--brand); }
+.big-btn { padding: 14px 22px; font-size: 1.05rem; font-weight: 600; }
+.badge-status { font-size: .85rem; padding: .4em .7em; }
+footer { color: #6c757d; padding: 30px 0; text-align: center; }

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+<h2 class="mb-4"><i class="bi bi-speedometer2"></i> Admin Dashboard</h2>
+<div class="row g-3 mb-4">
+  <div class="col-md-4">
+    <div class="card stat-card shadow-sm"><div class="card-body">
+      <h6 class="text-muted">Total Rooms</h6><h2>{{ total_rooms }}</h2>
+    </div></div>
+  </div>
+  <div class="col-md-4">
+    <div class="card stat-card shadow-sm"><div class="card-body">
+      <h6 class="text-muted">Total Reservations</h6><h2>{{ total_res }}</h2>
+    </div></div>
+  </div>
+  <div class="col-md-4">
+    <div class="card stat-card shadow-sm"><div class="card-body">
+      <h6 class="text-muted">Total Revenue</h6><h2>₱{{ "%.2f"|format(total_revenue) }}</h2>
+    </div></div>
+  </div>
+</div>
+
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h5><i class="bi bi-clock-history"></i> Recent Bookings</h5>
+    <div class="table-responsive">
+    <table class="table">
+      <thead><tr><th>#</th><th>Guest</th><th>Room</th><th>Check-in</th><th>Check-out</th><th>Total</th><th>Status</th></tr></thead>
+      <tbody>
+      {% for r in recent %}
+        <tr>
+          <td>{{ r.id }}</td><td>{{ r.full_name }}</td><td>{{ r.room_name }}</td>
+          <td>{{ r.check_in }}</td><td>{{ r.check_out }}</td>
+          <td>₱{{ "%.2f"|format(r.total_amount) }}</td>
+          <td><span class="badge bg-info">{{ r.status }}</span></td>
+        </tr>
+      {% else %}<tr><td colspan="7" class="text-muted">No bookings yet.</td></tr>{% endfor %}
+      </tbody>
+    </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

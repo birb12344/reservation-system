@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Reports{% endblock %}
+{% block content %}
+<h2 class="mb-3"><i class="bi bi-bar-chart"></i> Reports</h2>
+
+<div class="row g-4">
+  <div class="col-lg-6">
+    <div class="card shadow-sm h-100"><div class="card-body">
+      <h5>Room Occupancy</h5>
+      <table class="table">
+        <thead><tr><th>Room</th><th>Bookings</th><th>Nights Booked</th></tr></thead>
+        <tbody>
+        {% for o in occupancy %}
+          <tr><td>{{ o.name }}</td><td>{{ o.bookings }}</td><td>{{ "%.0f"|format(o.nights_booked) }}</td></tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div></div>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="card shadow-sm h-100"><div class="card-body">
+      <h5>Revenue Summary</h5>
+      <table class="table">
+        <thead><tr><th>Method</th><th>Total</th></tr></thead>
+        <tbody>
+        {% for r in revenue %}
+          <tr><td>{{ r.method }}</td><td>₱{{ "%.2f"|format(r.total) }}</td></tr>
+        {% else %}<tr><td colspan="2" class="text-muted">No revenue yet.</td></tr>{% endfor %}
+        </tbody>
+        <tfoot><tr class="fw-bold"><td>Grand Total</td><td>₱{{ "%.2f"|format(grand_total) }}</td></tr></tfoot>
+      </table>
+    </div></div>
+  </div>
+
+  <div class="col-12">
+    <div class="card shadow-sm"><div class="card-body">
+      <h5>Reservation List</h5>
+      <div class="table-responsive">
+      <table class="table">
+        <thead><tr><th>#</th><th>Guest</th><th>Room</th><th>Check-in</th><th>Check-out</th><th>Total</th><th>Status</th></tr></thead>
+        <tbody>
+        {% for r in reservations %}
+          <tr><td>{{ r.id }}</td><td>{{ r.full_name }}</td><td>{{ r.room_name }}</td>
+            <td>{{ r.check_in }}</td><td>{{ r.check_out }}</td>
+            <td>₱{{ "%.2f"|format(r.total_amount) }}</td><td>{{ r.status }}</td></tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      </div>
+    </div></div>
+  </div>
+</div>
+{% endblock %}

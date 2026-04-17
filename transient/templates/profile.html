@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}My Profile{% endblock %}
+{% block content %}
+<div class="row g-4">
+  <div class="col-lg-5">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h4><i class="bi bi-person-gear"></i> My Profile</h4>
+        <form method="post">
+          <div class="mb-3">
+            <label class="form-label">Full Name</label>
+            <input name="full_name" value="{{ user.full_name }}" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Email (read-only)</label>
+            <input value="{{ user.email }}" class="form-control" disabled>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Phone</label>
+            <input name="phone" value="{{ user.phone or '' }}" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">New Password (optional)</label>
+            <input type="password" name="new_password" class="form-control">
+          </div>
+          <button class="btn btn-brand">Save Changes</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-7">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h4><i class="bi bi-clipboard-check"></i> My Reservations</h4>
+        <div class="table-responsive">
+        <table class="table align-middle">
+          <thead><tr><th>#</th><th>Room</th><th>Check-in</th><th>Check-out</th><th>Total</th><th>Status</th></tr></thead>
+          <tbody>
+          {% for r in reservations %}
+            <tr>
+              <td>{{ r.id }}</td>
+              <td>{{ r.room_name }}</td>
+              <td>{{ r.check_in }}</td>
+              <td>{{ r.check_out }}</td>
+              <td>₱{{ "%.2f"|format(r.total_amount) }}</td>
+              <td><span class="badge bg-info">{{ r.status }}</span></td>
+            </tr>
+          {% else %}
+            <tr><td colspan="6" class="text-muted">No reservations yet.</td></tr>
+          {% endfor %}
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

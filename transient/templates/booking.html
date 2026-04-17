@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Book {{ room.name }}{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-7">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h3 class="mb-3"><i class="bi bi-calendar-plus"></i> Book {{ room.name }}</h3>
+        <p>{{ room.description }}</p>
+        <p>
+          <span class="badge bg-info">Capacity: {{ room.capacity }}</span>
+          <span class="badge bg-primary">₱{{ "%.2f"|format(room.price_per_night) }}/night</span>
+        </p>
+        <form method="post">
+          <div class="mb-3">
+            <label class="form-label fw-bold">Check-in date</label>
+            <input type="date" name="check_in" min="{{ today }}" class="form-control form-control-lg" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-bold">Check-out date</label>
+            <input type="date" name="check_out" min="{{ today }}" class="form-control form-control-lg" required>
+          </div>
+          <button class="btn btn-brand big-btn w-100" type="submit">
+            <i class="bi bi-check-circle"></i> Submit Reservation
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

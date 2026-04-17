@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Rooms{% endblock %}
+{% block content %}
+<h2 class="mb-4"><i class="bi bi-door-open"></i> Available Rooms</h2>
+<div class="row g-4">
+  {% for r in rooms %}
+  <div class="col-md-6 col-lg-4">
+    <div class="card room-card h-100 shadow-sm">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-start">
+          <h5 class="card-title">{{ r.name }}</h5>
+          {% if r.status == 'available' %}
+            <span class="badge bg-success badge-status">Available</span>
+          {% else %}
+            <span class="badge bg-secondary badge-status">{{ r.status|capitalize }}</span>
+          {% endif %}
+        </div>
+        <p class="text-muted small"><i class="bi bi-people"></i> Capacity: {{ r.capacity }} guests</p>
+        <p>{{ r.description }}</p>
+        <h4 class="text-primary">₱{{ "%.2f"|format(r.price_per_night) }}<small class="text-muted fs-6">/night</small></h4>
+      </div>
+      <div class="card-footer bg-white border-0">
+        {% if r.status == 'available' %}
+          <a href="{{ url_for('booking', room_id=r.id) }}" class="btn btn-brand w-100 big-btn">
+            <i class="bi bi-calendar-check"></i> Book Room
+          </a>
+        {% else %}
+          <button class="btn btn-secondary w-100 big-btn" disabled>Not Available</button>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

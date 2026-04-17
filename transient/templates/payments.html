@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Payments{% endblock %}
+{% block content %}
+<h2 class="mb-3"><i class="bi bi-cash-coin"></i> Payments</h2>
+
+<div class="card shadow-sm mb-4"><div class="card-body">
+  <h5>Record New Payment</h5>
+  <form method="post" action="{{ url_for('add_payment') }}" class="row g-2">
+    <div class="col-md-4">
+      <label class="form-label">Reservation</label>
+      <select name="reservation_id" class="form-select" required>
+        {% for r in reservations %}
+          <option value="{{ r.id }}">#{{ r.id }} — {{ r.full_name }} — {{ r.room_name }} (₱{{ "%.2f"|format(r.total_amount) }})</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-2"><label class="form-label">Amount</label>
+      <input type="number" step="0.01" name="amount" class="form-control" required></div>
+    <div class="col-md-2"><label class="form-label">Method</label>
+      <select name="method" class="form-select">
+        <option value="gcash">GCash</option><option value="paypal">PayPal</option><option value="cash">Cash</option>
+      </select></div>
+    <div class="col-md-2"><label class="form-label">Status</label>
+      <select name="status" class="form-select">
+        <option value="paid">Paid</option><option value="pending">Pending</option>
+        <option value="failed">Failed</option><option value="refunded">Refunded</option>
+      </select></div>
+    <div class="col-md-2"><label class="form-label">Reference</label>
+      <input name="transaction_ref" class="form-control"></div>
+    <div class="col-12"><button class="btn btn-brand big-btn"><i class="bi bi-plus-circle"></i> Record Payment</button></div>
+  </form>
+</div></div>
+
+<div class="card shadow-sm"><div class="card-body table-responsive">
+<table class="table align-middle">
+<thead><tr><th>#</th><th>Reservation</th><th>Guest</th><th>Room</th><th>Amount</th><th>Method</th><th>Status</th><th>Ref</th><th>Paid At</th></tr></thead>
+<tbody>
+{% for p in payments %}
+<tr>
+  <td>{{ p.id }}</td><td>#{{ p.res_id }}</td><td>{{ p.full_name }}</td><td>{{ p.room_name }}</td>
+  <td>₱{{ "%.2f"|format(p.amount) }}</td><td>{{ p.method }}</td>
+  <td><span class="badge bg-{{ 'success' if p.status=='paid' else 'warning' }}">{{ p.status }}</span></td>
+  <td>{{ p.transaction_ref or '—' }}</td><td>{{ p.paid_at }}</td>
+</tr>
+{% else %}<tr><td colspan="9" class="text-muted">No payments recorded.</td></tr>{% endfor %}
+</tbody></table>
+</div></div>
+{% endblock %}
