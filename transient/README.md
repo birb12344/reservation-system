@@ -22,33 +22,6 @@ house. Replaces manual logbooks with an online booking experience.
 
 ---
 
-## 1. Run locally
-
-```bash
-# 1. Clone or unzip the project
-cd reservation-system
-
-# 2. (Recommended) create a virtual environment
-python -m venv venv
-# Windows
-venv\Scripts\activate
-# macOS / Linux
-source venv/bin/activate
-
-# 3. Install dependencies
-pip install -r requirements.txt
-
-# 4. Run the app
-python app.py
-```
-
-Open <http://127.0.0.1:5000> in your browser.
-
-The SQLite database (`database.db`) and sample data are created automatically
-on first run.
-
----
-
 ## Folder structure
 
 ```
